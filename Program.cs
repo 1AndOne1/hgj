@@ -1,57 +1,71 @@
-﻿using System;
-using System.Linq.Expressions;
-
-class Calculator
+public class Calc
 {
-    public int Sum(int a, int b)
+    public int Sum(int x, int y)
     {
-        return a + b;
-    }
-
-    public int Subtract(int a, int b)
-    {
-        return a - b;
-    }
-
-    public int Multiply(int a, int b)
-    {
-        return a * b;
-    }
-
-    public int Divide(int a, int b)
-    {
-
-            if (b != 0)
-            {
-                return a / b;
-            }
-
-            else
-            {
-                throw new DivideByZeroException("Cannot divide by zero!");
-            }
+        return x + y;
     }
 }
 
+public class Requester
+{
+    Calc calc;
+
+    public Requester(Calc calc)
+    {
+        this.calc = calc;
+    }
+    public void req()
+    {
+        double firstValue, secondValue;
+        string action = "";
+
+        Console.WriteLine("Введите первое число: ");
+        firstValue = Convert.ToInt64(Console.ReadLine());
+
+        Console.WriteLine("Введите второе число: ");
+        secondValue = Convert.ToInt64(Console.ReadLine());
+
+        Console.WriteLine("Выберите операцию: '+' '-' '*' '/'");
+        action = Console.ReadLine();
+
+        switch (action)
+        {
+            case "+":
+                double plus = firstValue + secondValue;
+                Console.WriteLine("Результат сложения: " + plus);
+                break;
+            case "-":
+                double minus = firstValue - secondValue;
+                Console.WriteLine("Результат вычитания: " + minus);
+                break;
+            case "*":
+                double multi = firstValue * secondValue;
+                Console.WriteLine("Результат умножения: " + multi);
+                break;
+            case "/":
+                if (secondValue == 0)
+                {
+                    Console.WriteLine(0);
+                }
+                else
+                {
+                    double div = firstValue / secondValue;
+                    Console.WriteLine("Результат деления: " + div);
+                }
+                break;
+            default:
+                Console.WriteLine("Ошибка! Неизвестное действие!");
+                break;
+        }
+        Console.ReadLine();
+    }
+}
 class Program
 {
     static void Main(string[] args)
     {
-        Calculator calculator = new Calculator();
-
-        Console.Write("Enter the first number: ");
-        int a = Convert.ToInt32(Console.ReadLine());
-
-        Console.Write("Enter the second number: ");
-        int b = Convert.ToInt32(Console.ReadLine());
-        int sum = calculator.Sum(a, b);
-        int diff = calculator.Subtract(a, b);
-        int mult = calculator.Multiply(a, b);
-        int quot = calculator.Divide(a, b);
-
-        Console.WriteLine($"Sum: {sum}");
-        Console.WriteLine($"Difference: {diff}");
-        Console.WriteLine($"Product: {mult}");
-        Console.WriteLine($"Quotient: {quot}");
+        Calc calc = new Calc();
+        Requester req = new Requester(calc);
+        req.req();
     }
 }
